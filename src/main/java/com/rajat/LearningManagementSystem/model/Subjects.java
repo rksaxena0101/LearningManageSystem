@@ -18,8 +18,8 @@ public class Subjects {
     private Long id;
     private String name;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "student_subject", joinColumns = @JoinColumn(name = "subject_id"),
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "subjects", joinColumns = @JoinColumn(name = "subject_id"),
     inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Students> students;
 }

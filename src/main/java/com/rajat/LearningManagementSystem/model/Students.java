@@ -21,7 +21,7 @@ public class Students {
     private List<Subjects> enrolledSubjects;
 
     @ManyToMany
-    @JoinTable(name = "student_exam", joinColumns = @JoinColumn(name = "student_id"),
+    @JoinTable(name = "exams", joinColumns = @JoinColumn(name = "student_id"),
     inverseJoinColumns = @JoinColumn(name = "exam_id"))
     private List<Exams> registeredExams;
 
