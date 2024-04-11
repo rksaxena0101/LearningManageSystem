@@ -12,14 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "subject_details")
 public class Subjects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String subjectName;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "subjects", joinColumns = @JoinColumn(name = "subject_id"),
-    inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private List<Students> students;
+    @ManyToMany(mappedBy = "enrolledSubjects")
+    private List<Students> registeredStudents;
 }

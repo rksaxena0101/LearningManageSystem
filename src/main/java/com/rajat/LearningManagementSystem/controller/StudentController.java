@@ -30,13 +30,14 @@ public class StudentController {
 
     //Get all students details
     @GetMapping
-    public List<Students> getAllStudentsDetails() {
-        return studentService.getAllStudentsDetails();
+    public ResponseEntity<List<Students>> getAllStudentsDetails() {
+        return ResponseEntity.ok(studentService.getAllStudentsDetails());
     }
 
     @GetMapping("/{student_id}")
-    public Students getStudentDetailsById(@PathVariable Long student_id) {
-        return studentService.getStudentDetailsById(student_id);
+    public ResponseEntity<Students> getStudentDetailsById(@PathVariable Long student_id) {
+        Students studentsDetailsById = studentService.getStudentDetailsById(student_id);
+        return ResponseEntity.ok(studentsDetailsById);
     }
 
     @DeleteMapping("/{student_id}")

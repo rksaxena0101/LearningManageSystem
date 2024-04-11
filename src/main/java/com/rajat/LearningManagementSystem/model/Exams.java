@@ -13,19 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "exam_details")
 public class Exams {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String subject;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_id")
-    private Subjects subjectDetails;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subject_id", referencedColumnName = "id")
+    private Subjects subject;
 
-    @ManyToMany
-    @JoinTable(name = "exams", joinColumns = @JoinColumn(name = "exam_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    @ManyToMany(mappedBy = "registeredExams")
     private List<Students> enrolledStudents;
 
 }

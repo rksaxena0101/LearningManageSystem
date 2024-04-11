@@ -28,7 +28,7 @@ public class StudentServiceImp implements StudentService {
     //Get all students details
     @Override
     public List<Students> getAllStudentsDetails() {
-        return studentRepository.findAll(Sort.by(Sort.Direction.DESC, "name"));
+        return studentRepository.findAll(Sort.by(Sort.Direction.ASC, "studentName"));
     }
 
     //Get particular student details basis on student id.
@@ -43,11 +43,12 @@ public class StudentServiceImp implements StudentService {
         studentRepository.deleteById(student_id);
     }
 
-    //Updating name and registered exams
+    //Updating name, Enrolled subjects and registered exams
     @Override
     public Students updateStudentRecordById(Long student_id, Students student) {
         Students students = getStudentDetailsById(student_id);
-        students.setName(student.getName());
+        students.setStudentName(student.getStudentName());
+        students.setEnrolledSubjects(student.getEnrolledSubjects());
         students.setRegisteredExams(student.getRegisteredExams());
         return studentRepository.save(students);
     }
