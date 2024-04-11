@@ -30,6 +30,6 @@ public class Students {
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "student_subject",
             joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id"))
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Subjects> enrolledSubjects = new ArrayList<>();
 }

@@ -1,7 +1,11 @@
 package com.rajat.LearningManagementSystem.controller;
 
+import com.rajat.LearningManagementSystem.exception.StudentNotFoundException;
+import com.rajat.LearningManagementSystem.exception.SubjectNotFoundException;
+import com.rajat.LearningManagementSystem.model.Students;
 import com.rajat.LearningManagementSystem.model.Subjects;
 import com.rajat.LearningManagementSystem.service.SubjectService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +17,9 @@ public class SubjectController {
 
     private SubjectService subjectService;
 
+    public SubjectController(SubjectService subjectService) {
+        this.subjectService = subjectService;
+    }
     //Save subject in subject table
     @PostMapping
     public ResponseEntity<Subjects> saveSubjects(@RequestBody Subjects subjects) {
@@ -20,25 +27,35 @@ public class SubjectController {
     }
 
     @GetMapping
-    public List<Subjects> getAllSubjectList() {
-        return subjectService.getAllSubjectDetails();
+    public ResponseEntity<List<Subjects>> getAllSubjectList() {
+        return ResponseEntity.ok(subjectService.getAllSubjectDetails());
     }
 
     @GetMapping("/{subjectId}")
-    public Subjects getSubjectDetailsById(@PathVariable Long subjectId) {
-        return  subjectService.getSubjectsById(subjectId);
+    public ResponseEntity<Subjects> getSubjectDetailsById(@PathVariable Long subjectId) {
+        return  ResponseEntity.ok(subjectService.getSubjectsById(subjectId));
     }
 
-    @PostMapping("/updateSubjects/{subjectId}")
+    @PutMapping("/updateSubjects/{subjectId}")
     public ResponseEntity<Subjects> updateSubjects(@PathVariable Long subjectId, @RequestBody Subjects subjects) {
-            Subjects subjectsById = subjectService.getSubjectsById(subjectId);
-            subjectsById.setSubjectName(subjects.getSubjectName());
-            return ResponseEntity.ok(subjectsById);
+            return ResponseEntity.ok(subjectService.updateSubjects(subjectId, subjects));
     }
 
-    @DeleteMapping("/delete/{subjectId}")
-    public void deleteSubjectById(@PathVariable Long subjectId) {
-        subjectService.deleteSubjectById(subjectId);
+    @DeleteMapping("/delete/{subject_Id}")
+    public void deleteSubjectById(@PathVariable Long subject_Id) {
+        subjectService.deleteSubjectById(subject_Id);
+    }
+
+    @PutMapping("/enroll_student_to_subjects/{studentId}/{subjectId}")
+    public ResponseEntity<?> enrolledStudentToSubjects(@PathVariable Long studentId, @PathVariable Long subjectId) throws StudentNotFoundException, SubjectNotFoundException {
+        Students students = subjectService.EnrolledSubjectByStudents(studentId,subjectId);
+        return ResponseEntity.status(HttpStatus.OK).body(students);
+    }
+
+    @PutMapping("/un-enroll_student_to_subjects/{studentId}/{subjectId}")
+    public ResponseEntity<?> unEnrolledStudentToSubjects(@PathVariable Long studentId, @PathVariable Long subjectId) throws StudentNotFoundException, SubjectNotFoundException {
+        Students students = subjectService.UnenrolledSubjectByStudents(studentId,subjectId);
+        return ResponseEntity.status(HttpStatus.OK).body(students);
     }
 
 
