@@ -9,6 +9,7 @@ import com.rajat.LearningManagementSystem.repository.ExamRepository;
 import com.rajat.LearningManagementSystem.service.ExamService;
 import com.rajat.LearningManagementSystem.model.Students;
 import com.rajat.LearningManagementSystem.service.StudentService;
+import com.rajat.LearningManagementSystem.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ public class ExamServiceImp implements ExamService {
 
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private SubjectService subjectService;
 
     @Autowired
     private ExamRepository examRepository;
@@ -79,6 +82,8 @@ public class ExamServiceImp implements ExamService {
 
     @Override
     public Exams createExam(Exams exams) {
+        Subjects subjects = subjectService.saveSubjects(exams.getSubject());
+        exams.setSubject(subjects);
         return examRepository.save(exams);
     }
 
