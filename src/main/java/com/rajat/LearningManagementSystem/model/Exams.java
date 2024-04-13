@@ -1,5 +1,6 @@
 package com.rajat.LearningManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Exams {
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
     private Subjects subject;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "registeredExams")
     private List<Students> enrolledStudents;
 

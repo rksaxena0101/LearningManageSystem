@@ -46,14 +46,14 @@ public class SubjectController {
         subjectService.deleteSubjectById(subject_Id);
     }
 
-    @PutMapping("/enroll_student_to_subjects/{studentId}/{subjectId}")
-    public ResponseEntity<?> enrolledStudentToSubjects(@PathVariable Long studentId, @PathVariable Long subjectId) throws StudentNotFoundException, SubjectNotFoundException {
+    @PutMapping("/enroll_student_to_subjects/{student_id}/{subject_id}")
+    public ResponseEntity<?> enrolledStudentToSubjects(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) throws StudentNotFoundException, SubjectNotFoundException {
         Students students = subjectService.EnrolledSubjectByStudents(studentId,subjectId);
         return ResponseEntity.status(HttpStatus.OK).body(students);
     }
 
-    @PutMapping("/un-enroll_student_to_subjects/{studentId}/{subjectId}")
-    public ResponseEntity<?> unEnrolledStudentToSubjects(@PathVariable Long studentId, @PathVariable Long subjectId) throws StudentNotFoundException, SubjectNotFoundException {
+    @PutMapping("/un-enroll_student_to_subjects/{student_id}/{subject_id}")
+    public ResponseEntity<?> unEnrolledStudentToSubjects(@PathVariable("student_id") Long studentId, @PathVariable("subject_id") Long subjectId) throws StudentNotFoundException, SubjectNotFoundException {
         Students students = subjectService.UnenrolledSubjectByStudents(studentId,subjectId);
         return ResponseEntity.status(HttpStatus.OK).body(students);
     }
