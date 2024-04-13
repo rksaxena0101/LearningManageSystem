@@ -51,7 +51,7 @@ public class ExamController {
         return ResponseEntity.ok(examService.studentExamRegisteration(studentId, examId));
     }
 
-    @PutMapping("/enroll_exam/{id}/{id}")
+    @PutMapping("/unEnroll_exam/{id}/{id}")
     public ResponseEntity<Students> unEnrollStudentForExam(@PathVariable Long studentId, @PathVariable Long examId) throws
             StudentNotEnrolledForSubjectException, StudentNotFoundException, ExamNotFoundException {
         return ResponseEntity.ok(examService.removeStudentExamRegisteration(studentId, examId));
