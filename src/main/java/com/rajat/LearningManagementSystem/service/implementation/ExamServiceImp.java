@@ -21,15 +21,12 @@ public class ExamServiceImp implements ExamService {
     public static final Logger log = LoggerFactory.getLogger(ExamServiceImp.class);
 
     @Autowired
-    private ExamService examService;
-    @Autowired
     private StudentService studentService;
 
     @Autowired
     private ExamRepository examRepository;
 
-    public ExamServiceImp(ExamService examService, StudentService studentService) {
-        this.examService = examService;
+    public ExamServiceImp(StudentService studentService) {
         this.studentService = studentService;
     }
     @Override
@@ -43,7 +40,7 @@ public class ExamServiceImp implements ExamService {
             exam.getEnrolledStudents().add(student);
             student.getRegisteredExams().add(exam);
             Students studentReg = studentService.updateStudentRecordById(studentId, student);
-            Exams examReg = examService.udpateExam(exam, examId);
+            Exams examReg = udpateExam(exam, examId);
             log.info("Student Registered For Exam [{}]", student.getStudentName() + "-->" + exam.getId() + examId);
             return student;
         } else {
@@ -67,7 +64,7 @@ public class ExamServiceImp implements ExamService {
             exam.getEnrolledStudents().remove(student);
             student.getRegisteredExams().remove(exam);
             Students studentReg = studentService.updateStudentRecordById(studentId, student);
-            Exams examReg = examService.udpateExam(exam, examId);
+            Exams examReg = udpateExam(exam, examId);
             log.info("Remove student For Exam [{}]", student.getStudentName() + "-->" + exam.getId() + examId);
             return student;
         } else {
